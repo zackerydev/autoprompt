@@ -1,24 +1,24 @@
-name: 'autoprompt'
+name: 'publish'
 on:
   push:
     branches:
-      - main-temp
+      - main
 env:
   CI: true
   PNPM_CACHE_FOLDER: .pnpm-store
 jobs:
-	ci:
-		runs-on: ubuntu-latest
-		steps:
-			- uses: actions/checkout@v4
-			- uses: actions/setup-node@v4
-				with:
-					node-version-file: '.nvmrc'
-          cache: 'pnpm'
+  publish:
+    name: 'create and publish versions'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
       - name: install pnpm
         run: npm i pnpm@latest -g
       - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
       - name: setup pnpm config
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
       - run: pnpm install

@@ -4,6 +4,9 @@
 	"description": "",
 	"main": "dist/index.js",
 	"type": "module",
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"biome": "biome",
 		"start": "tsc -w",

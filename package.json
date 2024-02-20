@@ -7,7 +7,7 @@
 	"keywords": [],
 	"scripts": {
 		"ci:version": "pnpm version",
-		"ci:publish": "pnpm publish -r"
+		"ci:publish": "pnpm publish -F autoprompt"
 	},
 	"workspaces": [
 		"autoprompt",
