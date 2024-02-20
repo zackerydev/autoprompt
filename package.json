@@ -1,0 +1,26 @@
+{
+	"name": "autoprompt-root",
+	"version": "0.0.0",
+	"description": "",
+	"private": true,
+	"main": "index.js",
+	"keywords": [],
+	"scripts": {
+		"ci:version": "pnpm version",
+		"ci:publish": "pnpm publish -r"
+	},
+	"workspaces": [
+		"autoprompt",
+		"integration"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "1.5.3",
+		"@changesets/cli": "^2.27.1",
+		"@types/node": "^20.11.19",
+		"tsx": "^4.7.1",
+		"typescript": "^5.3.3",
+		"vitest": "^1.3.0"
+	}
+}
