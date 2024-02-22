@@ -1,5 +1,11 @@
 # autoprompt
 
+## 2.0.0
+
+### Major Changes
+
+- 7d37285: Support `.action` of Commander `program`, return `Command` instead of `T`
+
 ## 1.0.1
 
 ### Patch Changes
