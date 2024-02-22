@@ -54,7 +54,7 @@ export const buildPrompt = (option: ValidOption) => {
 
 export async function autoprompt<T>(
   program: Command,
-  autoPromptOpts?: AutoPromptOptions
+  autoPromptOpts?: AutoPromptOptions,
 ): Promise<T> {
   const options = program.options.map(validateOption);
   program.parse();
@@ -62,7 +62,7 @@ export async function autoprompt<T>(
   const promptedOptions = await promptForMissingOptions<Partial<T>>(
     autoPromptOpts?.prompter ?? prompt,
     options,
-    parsedOptions
+    parsedOptions,
   );
   return { ...parsedOptions, ...promptedOptions } as T;
 }
@@ -70,7 +70,7 @@ export async function autoprompt<T>(
 export async function promptForMissingOptions<T>(
   prompter: typeof prompt,
   options: ValidOption[],
-  parsedOptions: OptionValues
+  parsedOptions: OptionValues,
 ): Promise<T> {
   return await prompter(
     options
@@ -86,11 +86,11 @@ export async function promptForMissingOptions<T>(
               parsedOptions[
                 opt.long.replace("--", "") as keyof typeof parsedOptions
               ]
-            }`
+            }`,
           );
         }
         return missingValue;
       })
-      .map(buildPrompt)
+      .map(buildPrompt),
   );
 }
