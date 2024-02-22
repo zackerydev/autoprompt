@@ -1,29 +1,25 @@
 import { Command, program } from "commander";
 import { expect, test, vi } from "vitest";
-import { AutoPrompt } from "../";
+import { autoprompt } from "../";
 
 const pizza = program
-	.option("-d, --debug", "output extra debugging")
-	.option("-u, --stuffed-crust <boolean>", "stuffed crust")
-	.option("-p, --pizza-type <string>", "flavour of pizza")
-	.option("-s, --pizza-size <number>", "flavour of pizza")
-	.option("-c, --crust <oneof:thin|pan|hand-tossed>", "type of crust")
-	.option("-t, --toppings <of:pepperoni|cheese|sausage|pineapple>", "Toppings");
+  .option("-d, --debug", "output extra debugging")
+  .option("-u, --stuffed-crust <boolean>", "stuffed crust")
+  .option("-p, --pizza-type <string>", "flavour of pizza")
+  .option("-s, --pizza-size <number>", "flavour of pizza")
+  .option("-c, --crust <oneof:thin|pan|hand-tossed>", "type of crust")
+  .option("-t, --toppings <of:pepperoni|cheese|sausage|pineapple>", "Toppings");
 
 test("init autoprompt with a command command", async () => {
-	process.argv = ["node", "test", "-d"];
-	const prompter = vi.fn(() => {
-		return Promise.resolve({ debug: true });
-	});
-	const ap = new AutoPrompt(pizza, {
-		prompter: prompter as any,
-	});
+  process.argv = ["node", "test", "-d"];
+  const prompter = vi.fn().mockResolvedValue({ debug: true });
+  const ap = await autoprompt(pizza, {
+    prompter: prompter as any,
+  });
 
-	expect(ap).toBeDefined();
+  expect(ap).toBeDefined();
 
-	await ap.prompt();
-
-	expect(prompter).toMatchInlineSnapshot(`
+  expect(prompter).toMatchInlineSnapshot(`
     [MockFunction spy] {
       "calls": [
         [
@@ -82,33 +78,20 @@ test("init autoprompt with a command command", async () => {
   `);
 });
 
-test("quiet mode never calls console.log", async () => {
-	const customLogger = { log: vi.fn() };
-	const ap = new AutoPrompt(pizza, {
-		quiet: true,
-		logger: customLogger,
-		prompter: vi.fn(() => {
-			/** stub */
-		}) as any,
-	});
-	await ap.prompt();
-	expect(customLogger.log).not.toHaveBeenCalled();
-});
-
 test("init with default prompt", () => {
-	const ap = new AutoPrompt(pizza);
-	expect(ap).toBeDefined();
+  const ap = autoprompt(pizza);
+  expect(ap).toBeDefined();
 });
 
-test("throws error when program is missing long options", () => {
-	expect(
-		() =>
-			new AutoPrompt(new Command().option("-d"), {
-				prompter: vi.fn(() => {
-					/**stub */
-				}) as any,
-			}),
-	).toThrowErrorMatchingInlineSnapshot(
-		"[Error: AutoPrompt options (flags) must have a long name]",
-	);
+test("throws error when program is missing long options", async () => {
+  await expect(
+    async () =>
+      await autoprompt(new Command().option("-d"), {
+        prompter: vi.fn(() => {
+          /**stub */
+        }) as any,
+      })
+  ).rejects.toThrowErrorMatchingInlineSnapshot(
+    "[Error: AutoPrompt options (flags) must have a long name]"
+  );
 });

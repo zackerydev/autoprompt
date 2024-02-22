@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "bin/test.ts",
   "type": "module",
   "scripts": {
     "biome": "biome",

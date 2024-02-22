@@ -1,1 +1,1 @@
-export { AutoPrompt } from "./autoprompt/autoprompt.js";
+export { autoprompt } from "./autoprompt/autoprompt.js";
