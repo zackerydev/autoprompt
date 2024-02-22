@@ -2,22 +2,32 @@ import { Command, program } from "commander";
 import { expect, test, vi } from "vitest";
 import { autoprompt } from "../";
 
+const mockAction = vi.fn();
+
 const pizza = program
   .option("-d, --debug", "output extra debugging")
   .option("-u, --stuffed-crust <boolean>", "stuffed crust")
   .option("-p, --pizza-type <string>", "flavour of pizza")
   .option("-s, --pizza-size <number>", "flavour of pizza")
   .option("-c, --crust <oneof:thin|pan|hand-tossed>", "type of crust")
-  .option("-t, --toppings <of:pepperoni|cheese|sausage|pineapple>", "Toppings");
+  .option("-t, --toppings <of:pepperoni|cheese|sausage|pineapple>", "Toppings")
+  .action(mockAction);
 
 test("init autoprompt with a command command", async () => {
   process.argv = ["node", "test", "-d"];
-  const prompter = vi.fn().mockResolvedValue({ debug: true });
+  const prompter = vi.fn().mockResolvedValue({ "pizza-type": "pepperoni" });
   const ap = await autoprompt(pizza, {
     prompter: prompter as any,
   });
 
   expect(ap).toBeDefined();
+  expect(mockAction).toHaveBeenCalledWith(
+    {
+      debug: true,
+      pizzaType: "pepperoni",
+    },
+    program,
+  );
 
   expect(prompter).toMatchInlineSnapshot(`
     [MockFunction spy] {
@@ -70,7 +80,7 @@ test("init autoprompt with a command command", async () => {
         {
           "type": "return",
           "value": {
-            "debug": true,
+            "pizza-type": "pepperoni",
           },
         },
       ],
