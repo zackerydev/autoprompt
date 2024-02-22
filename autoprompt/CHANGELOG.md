@@ -1,5 +1,12 @@
 # autoprompt
 
+## 1.0.1
+
+### Patch Changes
+
+- 619244b: Update documentation and linting rules
+- fc53073: Update linting and Biome configuration
+
 ## 1.0.0
 
 ### Major Changes
