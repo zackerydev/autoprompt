@@ -90,8 +90,8 @@ test("throws error when program is missing long options", async () => {
         prompter: vi.fn(() => {
           /**stub */
         }) as any,
-      })
+      }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    "[Error: AutoPrompt options (flags) must have a long name]"
+    "[Error: AutoPrompt options (flags) must have a long name]",
   );
 });

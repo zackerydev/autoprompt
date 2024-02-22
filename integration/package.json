@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "biome": "biome",
+    "tsx": "tsx",
     "start": "tsc -w",
     "check": "biome check bin/*.ts",
     "build": "tsc -b"

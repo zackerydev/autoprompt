@@ -5,7 +5,7 @@
   },
   "formatter": {
     "indentStyle": "space",
-    "indentSize": 2
+    "indentWidth": 2
   },
   "json": {
     "formatter": {
@@ -20,9 +20,17 @@
   },
   "overrides": [
     {
-      "include": [
-        "**/*.test.ts"
-      ],
+      "include": ["**/*.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsoleLog": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["**/*.test.ts"],
       "linter": {
         "rules": {
           "suspicious": {

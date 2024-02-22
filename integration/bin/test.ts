@@ -9,7 +9,7 @@ async function main() {
     .option("-r, --crust <oneof:hand-tossed|pan|thin>", "Crust type")
     .option(
       "-t, --toppings <of:pepperoni|cheese|sausage|pineapple>",
-      "Toppings"
+      "Toppings",
     );
 
   const options = await autoprompt(program);
