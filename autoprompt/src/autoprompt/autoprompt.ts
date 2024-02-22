@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import type { Command, Option, OptionValues } from "commander";
 import enquirer from "enquirer";
-import { convertStringToOptions } from "../util.js";
+import { camelize, convertStringToOptions } from "../util.js";
 
 const { prompt } = enquirer;
 
@@ -52,40 +52,49 @@ export const buildPrompt = (option: ValidOption) => {
   };
 };
 
-export async function autoprompt<T>(
+export async function autoprompt(
   program: Command,
   autoPromptOpts?: AutoPromptOptions,
-): Promise<T> {
+): Promise<Command> {
   const options = program.options.map(validateOption);
-  program.parse();
+  program.parseOptions(process.argv);
   const parsedOptions = program.opts();
-  const promptedOptions = await promptForMissingOptions<Partial<T>>(
+  const promptedOptions = await promptForMissingOptions(
     autoPromptOpts?.prompter ?? prompt,
     options,
     parsedOptions,
   );
-  return { ...parsedOptions, ...promptedOptions } as T;
+
+  const args = process.argv;
+
+  args.push(
+    ...Object.entries(promptedOptions)
+      .filter(([_key, value]) => value != null)
+      .map(([key, value]) => {
+        return `--${key}=${value}`;
+      }),
+  );
+
+  program.parse(args);
+
+  return program;
 }
 
-export async function promptForMissingOptions<T>(
+export async function promptForMissingOptions(
   prompter: typeof prompt,
   options: ValidOption[],
   parsedOptions: OptionValues,
-): Promise<T> {
+): Promise<Partial<OptionValues>> {
   return await prompter(
     options
       .filter((opt) => {
         // only prompt for options that were not passed in
         const missingValue =
-          !parsedOptions[
-            opt.long.replace("--", "") as keyof typeof parsedOptions
-          ];
+          !parsedOptions[camelize(opt.long.replace("--", ""))];
         if (!missingValue) {
           console.log(
             `${chalk.green("✔")} ${opt.description} · ${
-              parsedOptions[
-                opt.long.replace("--", "") as keyof typeof parsedOptions
-              ]
+              parsedOptions[camelize(opt.long.replace("--", ""))]
             }`,
           );
         }

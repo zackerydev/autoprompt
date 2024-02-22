@@ -40,15 +40,15 @@ program
     .option(
         "-t, --toppings <of:pepperoni|cheese|sausage|pineapple>",
         "Toppings",
-    );
+    ).action((opts: Pizza) => {
+        console.log(opts);
+    });
 
 program.parse(process.argv);
 
-// prompt the user for optionss not provided on the command line
-const options = await autoprompt<Pizza>(program);
+// prompt the user for options not provided on the command line
+await autoprompt(program);
 
-
-console.log(options);
 /**
     * {
     *   name: "Pepperoni",
