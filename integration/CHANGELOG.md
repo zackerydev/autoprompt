@@ -1,5 +1,12 @@
 # integration
 
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - autoprompt@2.0.1
+
 ## 1.0.4
 
 ### Patch Changes

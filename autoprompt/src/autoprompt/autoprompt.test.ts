@@ -15,7 +15,7 @@ const pizza = program
 
 test("init autoprompt with a command command", async () => {
   process.argv = ["node", "test", "-d"];
-  const prompter = vi.fn().mockResolvedValue({ "pizza-type": "pepperoni" });
+  const prompter = vi.fn().mockResolvedValue({ pizzaType: "pepperoni" });
   const ap = await autoprompt(pizza, {
     prompter: prompter as any,
   });
@@ -37,19 +37,19 @@ test("init autoprompt with a command command", async () => {
             {
               "choices": undefined,
               "message": "stuffed crust",
-              "name": "stuffed-crust",
+              "name": "stuffedCrust",
               "type": "confirm",
             },
             {
               "choices": undefined,
               "message": "flavour of pizza",
-              "name": "pizza-type",
+              "name": "pizzaType",
               "type": "input",
             },
             {
               "choices": undefined,
               "message": "flavour of pizza",
-              "name": "pizza-size",
+              "name": "pizzaSize",
               "type": "numeral",
             },
             {
@@ -80,7 +80,7 @@ test("init autoprompt with a command command", async () => {
         {
           "type": "return",
           "value": {
-            "pizza-type": "pepperoni",
+            "pizzaType": "pepperoni",
           },
         },
       ],
@@ -96,7 +96,7 @@ test("init with default prompt", () => {
 test("throws error when program is missing long options", async () => {
   await expect(
     async () =>
-      await autoprompt(new Command().option("-d"), {
+      await autoprompt(new Command().option("-d").action(mockAction), {
         prompter: vi.fn(() => {
           /**stub */
         }) as any,

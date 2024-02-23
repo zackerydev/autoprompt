@@ -1,5 +1,11 @@
 # autoprompt
 
+## 2.0.1
+
+### Patch Changes
+
+- feat(autoprompt): Better support for actions with hooks, allow optional flags, and parseAsync instead of parse
+
 ## 2.0.0
 
 ### Major Changes
