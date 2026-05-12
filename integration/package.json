@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "autoprompt": "workspace:^",
-    "commander": "^12.0.0",
+    "commander": "^14.0.0",
     "enquirer": "^2.4.1"
   },
   "devDependencies": {
