@@ -16,7 +16,7 @@
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.5.12",
 		"@changesets/cli": "^2.27.1",
 		"@types/node": "^22.0.0",
 		"tsx": "^4.7.1",
